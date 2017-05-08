@@ -1,0 +1,66 @@
+newmtl initialShadingGroup
+illum 4
+Kd 0.80 0.80 0.80
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+Ni 1.00
+newmtl lambert2SG
+illum 4
+Kd 0.50 0.50 0.50
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+Ke 20 20 20
+Ni 1.00
+newmtl lambert3SG
+illum 4
+Kd 0.50 0.50 0.50
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+Ke 1.5 1.5 1.5
+Ni 1.00
+newmtl lambert4SG
+illum 4
+Kd 0.50 0.50 0.50
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+Ke 5 5 5
+Ni 1.00
+newmtl lambert5SG
+illum 4
+Kd 0.50 0.50 0.50
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+Ke 6 6 6
+Ni 1.00
+newmtl mia_material_x_passes1SG
+illum 4
+Kd 0.52 0.52 0.52
+Ka 0.27 0.27 0.27
+Tf 0.00 0.00 0.00
+Ni 1.0
+Ns 500
+Ks 0.9 0.30 0.30
+newmtl mia_material_x_passes2SG
+illum 4
+Kd 0.52 0.52 0.52
+Ka 0.27 0.27 0.27
+Tf 0.00 0.00 0.00
+Ni 1.0
+Ns 300
+Ks 0.4 0.30 0.30
+newmtl mia_material_x_passes3SG
+illum 4
+Kd 0.52 0.52 0.52
+Ka 0.27 0.27 0.27
+Tf 0.00 0.00 0.00
+Ni 1.0
+Ns 180
+Ks 0.12 0.4 0.4
+newmtl mia_material_x_passes4SG
+illum 4
+Kd 0.52 0.52 0.52
+Ka 0.27 0.27 0.27
+Tf 0.00 0.00 0.00
+Ni 1.0
+Ns 500
+Ks 0.7 0.40 0.40
