@@ -10,4 +10,4 @@ struct RGBType {
 	double b;
 };
 
-void savebmp(const char *filename, int w, int h, int dpi, RGBType *data) {};
+void savebmp(const char *filename, int w, int h, int dpi, RGBType *data);

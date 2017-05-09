@@ -44,7 +44,7 @@ void savebmp(const char *filename, int w, int h, int dpi, RGBType *data) {
 	bmpinfoheader[31] = (unsigned char)(ppm >> 16);
 	bmpinfoheader[32] = (unsigned char)(ppm >> 24);
 
-	f = fopen(filename, "wb");
+	fopen_s(&f, filename, "wb");
 
 	fwrite(bmpfileheader, 1, 14, f);
 	fwrite(bmpinfoheader, 1, 40, f);

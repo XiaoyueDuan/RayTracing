@@ -1,4 +1,6 @@
 #pragma once
+
+// The description of file format from; http://paulbourke.net/dataformats/mtl/
 #include <vector>
 #include <string>
 
@@ -22,7 +24,12 @@ class Kd :public Attribute
 	//	increase or decrease the relectivity accordingly.
 public:
 	float r, g, b;
-	Kd() :Attribute() {}
+	Kd() :Attribute() 
+	{
+		r = 0.0;
+		g = 0.0;
+		b = 0.0;
+	}
 };
 
 class Ka :public Attribute
@@ -38,7 +45,12 @@ class Ka :public Attribute
 	//	or decrease the relectivity accordingly.
 public:
 	float r, g, b;
-	Ka() :Attribute() {}
+	Ka() :Attribute() 
+	{
+		r = 0.0;
+		g = 0.0;
+		b = 0.0;
+	}
 };
 
 class Ks :public Attribute
@@ -53,7 +65,12 @@ class Ks :public Attribute
 	//	increase or decrease the relectivity accordingly.
 public:
 	float r, g, b;
-	Ks() :Attribute() {}
+	Ks() :Attribute() 
+	{
+		r = 0.0;
+		g = 0.0;
+		b = 0.0;
+	}
 };
 
 class Ns :public Attribute
@@ -67,7 +84,7 @@ class Ns :public Attribute
 	//	from 0 to 1000.
 public:
 	int exponent;
-	Ns() :Attribute() {}
+	Ns() :Attribute() { exponent = 0; }
 };
 
 class Tr :public Attribute
@@ -78,7 +95,7 @@ class Tr :public Attribute
 	//	Tr values normally range from 0.0 to 1.0.
 public:
 	float ratio;
-	Tr() :Attribute() {}
+	Tr() :Attribute() { ratio = 0; }
 };
 
 class Ni :public Attribute
@@ -95,7 +112,7 @@ class Ni :public Attribute
 	//	recommended.
 public:
 	float optical_density;
-	Ni() :Attribute() {}
+	Ni() :Attribute() { optical_density = 1.0; }
 };
 
 class Tf :public Attribute
@@ -110,7 +127,12 @@ class Tf :public Attribute
 	//	increase or decrease the relectivity accordingly.
 public:
 	float r, g, b;
-	Tf() :Attribute() {}
+	Tf() :Attribute() 
+	{
+		r = 0.0;
+		g = 0.0;
+		b = 0.0;
+	}
 };
 
 class Ke :public Attribute
@@ -120,7 +142,12 @@ class Ke :public Attribute
 	//If you also have a defined emission color the material will irradiate light.
 public:
 	int r, g, b;
-	Ke() :Attribute() {}
+	Ke() :Attribute() 
+	{
+		r = 0;
+		g = 0;
+		b = 0;
+	}
 };
 
 class Material
@@ -128,10 +155,12 @@ class Material
 public:
 	string name;
 	int illum;
-	vector<Attribute> attributeList;
-
-	void addAttribute(Attribute a)
-	{
-		attributeList.push_back(a);
-	}
+	Kd kd;
+	Ka ka;
+	Ks ks;
+	Ns ns;
+	Tr tr;
+	Ni ni;
+	Tf tf;
+	Ke ke;
 };

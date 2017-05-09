@@ -14,3 +14,10 @@ public:
 
 	bool loadMTL(const char * path);
 };
+
+class ObjLoader
+{
+public:
+	vector<Object> groupList;
+	bool loadObj(const char * path);
+};
