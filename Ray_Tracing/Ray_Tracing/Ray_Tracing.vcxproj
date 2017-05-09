@@ -112,6 +112,7 @@
   <ItemGroup>
     <ClInclude Include="FileLoader.h" />
     <ClInclude Include="ImageSaver.h" />
+    <ClInclude Include="MaterialDataStructure.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FileLoader.cpp" />
