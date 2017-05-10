@@ -87,18 +87,6 @@ bool MTLLoader::loadMTL(const char * path)
 				{
 					ss >> material.ni.optical_density;
 				}
-				else if (type == "Tf")
-				{
-					ss >> material.tf.r;
-					ss >> material.tf.g;
-					ss >> material.tf.b;
-				}
-				else if (type == "Ke")
-				{
-					ss >> material.ke.r;
-					ss >> material.ke.g;
-					ss >> material.ke.b;
-				}
 				else if (type == "newmtl")
 				{
 					materialList.push_back(material);

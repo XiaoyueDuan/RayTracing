@@ -110,9 +110,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AABB.h" />
     <ClInclude Include="FileLoader.h" />
+    <ClInclude Include="Geometry.h" />
     <ClInclude Include="ImageSaver.h" />
     <ClInclude Include="MaterialDataStructure.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="Sphere.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FileLoader.cpp" />

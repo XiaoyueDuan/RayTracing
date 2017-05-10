@@ -115,41 +115,6 @@ public:
 	Ni() :Attribute() { optical_density = 1.0; }
 };
 
-class Tf :public Attribute
-{
-	//Tf r g b 
-	//	The Tf statement specifies the transmission filter using RGB values.
-
-	//	"r g b" are the values for the red, green, and blue components of the
-	//	atmosphere.The g and b arguments are optional.If only r is
-	//	specified, then g, and b are assumed to be equal to r.The r g b values
-	//	are normally in the range of 0.0 to 1.0.Values outside this range
-	//	increase or decrease the relectivity accordingly.
-public:
-	float r, g, b;
-	Tf() :Attribute() 
-	{
-		r = 0.0;
-		g = 0.0;
-		b = 0.0;
-	}
-};
-
-class Ke :public Attribute
-{
-	//Ke stands for emissive coeficient. It goes together with ambient, diffuse
-	//and specular and represents the amount of light emitted by the material. 
-	//If you also have a defined emission color the material will irradiate light.
-public:
-	int r, g, b;
-	Ke() :Attribute() 
-	{
-		r = 0;
-		g = 0;
-		b = 0;
-	}
-};
-
 class Material
 {
 public:
@@ -161,6 +126,4 @@ public:
 	Ns ns;
 	Tr tr;
 	Ni ni;
-	Tf tf;
-	Ke ke;
 };
