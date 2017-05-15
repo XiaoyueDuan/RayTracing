@@ -19,14 +19,11 @@
     <Filter Include="头文件\Material">
       <UniqueIdentifier>{d41b4515-29eb-4245-b1a9-26f91d100b5b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\IO">
+      <UniqueIdentifier>{bd48570d-038c-4242-8a2c-0cbd5682ea0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FileLoader.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageSaver.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Geometry.h">
       <Filter>头文件\Geometry</Filter>
     </ClInclude>
@@ -51,16 +48,22 @@
     <ClInclude Include="Constant.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="FileLoader.h">
+      <Filter>头文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageSaver.h">
+      <Filter>头文件\IO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FileLoader.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageSaver.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FileLoader.cpp">
+      <Filter>头文件\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageSaver.cpp">
+      <Filter>头文件\IO</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

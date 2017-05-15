@@ -11,11 +11,11 @@ private:
 	Vec3f v[3];
 	Vec3f vn[3];
 	Vec2f vt[4];
-	Vec3f normal;
-	AABBox bbox;
+	Vec3f normal;	
 	bool smooth=false; // wether this triangle should be smoothy or not
 
 public:
+	AABBox bbox;
 	Triangle(vector<Vec3f> &vs, vector<Vec3f> &vn, vector<Vec3f> &vt, bool s);
 	
 	bool intersect(const Vec3f &orig, const Vec3f &dir,
@@ -64,12 +64,7 @@ Triangle::Triangle(vector<Vec3f> &vs, vector<Vec3f> &vns, vector<Vec3f> &vts, bo
 		return;
 	}
 	
-	// initlize the three vertex of triangle
-	// and bounding box
-
-	// Initlize minium and maximam vertex
-	Vec3f minV(kInfinity, kInfinity, kInfinity), maxV(-kInfinity, -kInfinity, -kInfinity);
-
+	// Initlize the three vertex of triangle
 	// Loop three input vertex
 	for (int i = 0; i < 3; ++i)
 	{
@@ -78,17 +73,8 @@ Triangle::Triangle(vector<Vec3f> &vs, vector<Vec3f> &vns, vector<Vec3f> &vts, bo
 		setV(vts[i], i);
 		
 		// Compare with vertex to find out max and min Position of the triangle
-		minV.x = (v[i].x < minV.x) ? v[i].x : minV.x;
-		maxV.x = (v[i].x > maxV.x) ? v[i].x : maxV.x;
-		
-		minV.y = (v[i].y < minV.y) ? v[i].y : minV.y;
-		maxV.y = (v[i].y > maxV.y) ? v[i].y : maxV.y;
-
-		minV.z = (v[i].z < minV.z) ? v[i].z : minV.z;
-		maxV.z = (v[i].z > maxV.z) ? v[i].z : maxV.z;
+		bbox.modify(vs[i]);
 	}
-	bbox.bounds[0] = minV;
-	bbox.bounds[1] = maxV;
 
 	// Calculate face normal
 	normal= (v[1] - v[0]).crossProduct(v[2] - v[0]);

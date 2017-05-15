@@ -1,5 +1,4 @@
 #pragma once
-#define M_PI 3.1415926
 
 #include "Object.h"
 
@@ -15,7 +14,7 @@ public:
 	//	orig: the ray origin
 	//	dir:  the ray direction
 	//	t(out): the distance from the ray origin to the intersection point
-	bool intersect(const Vec3f &orig, const Vec3f &dir, float &t) const
+	bool intersect(const Vec3f &orig, const Vec3f &dir, float &t, int triIndex, Vec2f &uv) const
 	{
 		float t0, t1; // solutions for t if the ray intersects
 
@@ -44,13 +43,19 @@ public:
 	//	hitPoint: the point ont the surface we want to get data on
 	//	hitPointNormal: the normal at hit point
 	//	texture(out):the texture coordinates at hit point
-	void getSurfaceData(const Vec3f &hitPoint,
-						Vec3f &hitPointNormal) const
+	void getSurfaceData(const Vec3f &hitPoint, const Vec3f &viewDirection,
+		const int &triIndex, const Vec2f &uv,
+		Vec3f &hitNormal, Vec2f &hitTextureCoordinates) const
 	{
 		// In this particular case, the normal is simular to a point on a unit sphere
 		// centred around the origin. We can thus use the normal coordinates to compute
 		// the spherical coordinates of hitPoint.
-		hitPointNormal = hitPoint - center;
-		hitPointNormal.normalize();
+		hitNormal = hitPoint - center;
+		hitNormal.normalize();
+
+		// atan2 returns a value in the range [-pi, pi] and we need to remap it to range [0, 1]
+		// acosf returns a value in the range [0, pi] and we also need to remap it to the range [0, 1]
+		hitTextureCoordinates.x = (1 + atan2(hitNormal.z, hitNormal.x) / M_PI) * 0.5;
+		hitTextureCoordinates.y = acosf(hitNormal.y) / M_PI;
 	}
 };

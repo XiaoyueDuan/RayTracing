@@ -1,5 +1,6 @@
 #pragma once
 
+#include"Constant.h"
 #include "Geometry.h"
 #include<cmath>
 
@@ -10,7 +11,11 @@ public:
 	// bounds[1] is the maximum vertex(maxX, maxY, maxZ)
 	Vec3f bounds[2];
 
-	AABBox(){}
+	AABBox()
+	{
+		bounds[0] = Vec3f(kInfinity, kInfinity, kInfinity);
+		bounds[1] = Vec3f(-kInfinity, -kInfinity, -kInfinity);
+	}
 	AABBox(const Vec3f &b0, const Vec3f &b1) { bounds[0] = b0, bounds[1] = b1; }
 
 	bool intersect(const Vec3f &orig, const Vec3f &dir) const
@@ -56,4 +61,16 @@ public:
 		}
 		return true;
 	}	
+
+	// When a new vertex added, then adjust the bounding box according to the vertex
+	void modify(Vec3f &v)
+	{
+		bounds[0].x = (v.x < bounds[0].x) ? v.x : bounds[0].x;
+		bounds[0].y = (v.y < bounds[0].y) ? v.y : bounds[0].y;
+		bounds[0].z = (v.z < bounds[0].z) ? v.z : bounds[0].z;
+
+		bounds[1].x = (v.x < bounds[1].x) ? v.x : bounds[1].x;
+		bounds[1].y = (v.y < bounds[1].y) ? v.y : bounds[1].y;
+		bounds[1].z = (v.z < bounds[1].z) ? v.z : bounds[1].z;
+	}
 };

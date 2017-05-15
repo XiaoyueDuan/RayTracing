@@ -14,7 +14,14 @@ public:
 								const int &triIndex, const Vec2f &uv,
 								Vec3f &hitNormal, Vec2f &hitTextureCoordinates);
 	
-	void addTriangle(Triangle &tri) { triangleList.push_back(tri); }
+	void addTriangle(Triangle &tri) 
+	{ 
+		triangleList.push_back(tri); 
+
+		// Test whether to change the parameter of bounding box
+		aabb.modify(tri.bbox.bounds[0]);
+		aabb.modify(tri.bbox.bounds[1]);
+	}
 };
 
 bool TriangleMesh::intersect(const Vec3f &orig, const Vec3f &dir, 
