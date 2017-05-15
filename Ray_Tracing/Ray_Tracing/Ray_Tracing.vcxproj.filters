@@ -42,6 +42,15 @@
     <ClInclude Include="AABB.h">
       <Filter>头文件\Geometry</Filter>
     </ClInclude>
+    <ClInclude Include="TriangleMesh.h">
+      <Filter>头文件\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>头文件\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Constant.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FileLoader.cpp">

@@ -1,21 +1,19 @@
 #pragma once
 
-#include "Object.h"
+#include "Geometry.h"
 #include<cmath>
 
-// 5.11:
-// AABBox won't genrate from Object, like what it does in 
-// https://www.scratchapixel.com/code/upload/ray-tracing-simple-shapes/raybox.cpp
-class AABBox : public Object
+class AABBox
 {
 public:
 	// bounds[0] is the minimal vertex(minX, minY, minZ)
 	// bounds[1] is the maximum vertex(maxX, maxY, maxZ)
 	Vec3f bounds[2];
 
+	AABBox(){}
 	AABBox(const Vec3f &b0, const Vec3f &b1) { bounds[0] = b0, bounds[1] = b1; }
 
-	bool intersect(const Vec3f &orig, const Vec3f &dir, float &t) const
+	bool intersect(const Vec3f &orig, const Vec3f &dir) const
 	{
 		Vec3f invdir = 1 / dir;
 		int sign[3];
@@ -49,7 +47,7 @@ public:
 		if (tzmax < tmax)
 			tmax = tzmax;
 
-		t = tmin;
+		float t = tmin;
 
 		if (t < 0) 
 		{
@@ -58,15 +56,4 @@ public:
 		}
 		return true;
 	}	
-
-	void getSurfaceData(const Vec3f &hitPoint,
-		Vec3f &hitPointNormal) const
-	{		
-		// if the upper face, return (0,1,0)
-		// if the buttom face, return (0,-1,0)
-		// if the left face, return (-1,0,0)
-		// if the right face, return (1,0,0)
-		// if the front face, return (0,0,1)
-		// if the back face, return (0,0,-1)
-	}
 };

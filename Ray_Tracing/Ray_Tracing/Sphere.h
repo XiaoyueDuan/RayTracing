@@ -10,7 +10,7 @@ public:
 	float radius2; // radius^2
 	Vec3f center;
 
-	Sphere(const Vec3f &c, const float &r) : radius(r), radius2(r *r), center(c) {}
+	Sphere(const Vec3f &c, const float &r) : radius(r), radius2(r*r), center(c) {}
 	// Ray-sphere intersection 
 	//	orig: the ray origin
 	//	dir:  the ray direction
