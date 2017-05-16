@@ -129,4 +129,10 @@ public:
 
 	bool self_luminous;
 	bool transparent;
+
+	Material(){}
+	Material(string name) 
+	{
+		this->name = name;
+	}
 };

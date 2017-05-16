@@ -1,11 +1,12 @@
 #pragma once
-#include "Object.h"
+#include "MultiObjects.h"
 #include "Triangle.h"
 
-class TriangleMesh:Object
+class TriangleMesh: MultiObjects
 {
 private:
 	vector<Triangle> triangleList;
+	Material material;
 public:
 	bool intersect(const Vec3f &orig, const Vec3f &dir, 
 					float &t, int triIndex, Vec2f &uv);
@@ -28,8 +29,8 @@ bool TriangleMesh::intersect(const Vec3f &orig, const Vec3f &dir,
 	float &tNear, int triIndex, Vec2f &uv)
 {
 	// 1. Use bounding box to judge roughly whether intersect first
-	if (!aabb.intersect(orig, dir))
-		return false;
+	//if (!aabb.intersect(orig, dir))
+	//	return false;
 		
 	// 2. The find out whether intersect and the intersect position
 	bool isect = false;

@@ -22,27 +22,18 @@
     <Filter Include="头文件\IO">
       <UniqueIdentifier>{bd48570d-038c-4242-8a2c-0cbd5682ea0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Object">
+      <UniqueIdentifier>{2f1527ed-217a-476a-9f73-ac44df6ff6c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Geometry.h">
-      <Filter>头文件\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>头文件\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Sphere.h">
       <Filter>头文件\Geometry</Filter>
     </ClInclude>
     <ClInclude Include="MaterialDataStructure.h">
       <Filter>头文件\Material</Filter>
     </ClInclude>
     <ClInclude Include="AABB.h">
-      <Filter>头文件\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="TriangleMesh.h">
-      <Filter>头文件\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Triangle.h">
       <Filter>头文件\Geometry</Filter>
     </ClInclude>
     <ClInclude Include="Constant.h">
@@ -53,6 +44,27 @@
     </ClInclude>
     <ClInclude Include="ImageSaver.h">
       <Filter>头文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Group.h">
+      <Filter>头文件\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>头文件\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>头文件\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="TriangleMesh.h">
+      <Filter>头文件\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>头文件\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiObjects.h">
+      <Filter>头文件\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>头文件\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
