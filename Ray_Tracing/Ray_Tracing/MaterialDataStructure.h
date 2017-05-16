@@ -84,7 +84,7 @@ class Ns :public Attribute
 	//	from 0 to 1000.
 public:
 	int exponent;
-	Ns() :Attribute() { exponent = 0; }
+	Ns() :Attribute() { exponent = 1; }
 };
 
 class Tr :public Attribute
@@ -126,4 +126,7 @@ public:
 	Ns ns;
 	Tr tr;
 	Ni ni;
+
+	bool self_luminous;
+	bool transparent;
 };
