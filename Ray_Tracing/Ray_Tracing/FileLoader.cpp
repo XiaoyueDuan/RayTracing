@@ -95,6 +95,112 @@ bool MTLLoader::loadMTL(const char * path)
 			}
 		}
 	}
-	cin.rdbuf(cinbuf);//reset to standard output again
+	//Finally, reset to standard output again
+	cin.rdbuf(cinbuf);
+	return true;
+}
+
+bool MTLLoader::findMaterial(string materialName, Material &m)
+{
+	// find the Material according to its name
+
+	return false;
+}
+
+bool ObjLoader::loadObj(const char * path, const char * fileName)
+{
+	// step 1: test whether the file exists 
+	ifstream in(path);
+	//ifstream in(path + fileName);
+	if (in.fail())
+	{
+		cout << "The file does not exist!" << endl;
+		return false;
+	}
+
+	streambuf *cinbuf = cin.rdbuf();	//save old buf
+	cin.rdbuf(in.rdbuf());				//redirect cin to file
+
+	// step 2: test whether the file is empty
+	string head;
+	getline(cin, head);
+	if (cin.eof())
+	{
+		cout << "The file is empty!" << endl;
+		return false;
+	}
+
+	string type;
+	Scene scene;
+	bool smooth;
+	while (true)
+	{
+		getline(cin, head);
+		if (cin.eof())
+			break;
+		
+		istringstream ss(head);
+		if (head.empty())
+			continue;
+		else
+		{
+			ss >> type;
+			if (type=="mtllib")
+			{
+				MTLLoader mtlLoder;
+
+				string name;
+				ss >> name;
+				// mtlLoder.loadMTL(path+name);
+				mtlLoder.loadMTL(path);
+			}
+			else if (type == "g")
+			{
+				string name;
+				ss >> name;
+
+				if(name!="default")
+					Group g(name);
+
+
+				
+			}
+			else if (type == "v")
+			{
+				Vec3f vertex;
+				ss >> vertex.x;
+				ss >> vertex.y;
+				ss >> vertex.z;
+				vertexList.push_back(vertex);
+			}
+			else if (type == "vt")
+			{
+				Vec2f vertexTexture;
+				ss >> vertexTexture.x;
+				ss >> vertexTexture.y;
+				vertexTextureList.push_back(vertexTexture);
+			}
+			else if (type == "vn")
+			{
+				Vec3f vertexNormal;
+				ss >> vertexNormal.x;
+				ss >> vertexNormal.y;
+				ss >> vertexNormal.z;
+				vertexNormalList.push_back(vertexNormal);
+			}
+			else if (type == "s")
+			{
+				string off;
+				ss >> off;
+				if (off == "off")
+					smooth = false;
+				else
+					smooth = true;
+			}
+		}
+	}
+
+	//Finally, reset to standard output again
+	cin.rdbuf(cinbuf);
 	return true;
 }
