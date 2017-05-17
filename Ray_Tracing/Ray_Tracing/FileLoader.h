@@ -20,7 +20,7 @@ public:
 
 	//bool loadMTL(const char * path);
 	bool loadMTL(const string path);
-	bool findMaterial(string materialName, Material *m);
+	bool findMaterial(string materialName, Material &m);
 };
 
 class ObjLoader
@@ -35,6 +35,8 @@ private:
 	vector<int> split(const string &s, char delim);
 
 public:
+	Scene scene; // the Scene object
 	//bool loadObj(const char * path, const char * fileName);
-	bool loadObj(const string path);
+	//bool loadObj(const string path);
+	bool loadObj(const string path, const string name);
 };

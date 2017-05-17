@@ -1,23 +1,7 @@
-﻿  TriangleMesh.cpp
+﻿  FileLoader.cpp
 f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\constant.h(9): warning C4305: “初始化”: 从“double”到“float”截断
 f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\multiobjects.h(28): warning C4018: “<”: 有符号/无符号不匹配
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\trianglemesh.cpp(14): warning C4018: “<”: 有符号/无符号不匹配
-  Triangle.cpp
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\constant.h(9): warning C4305: “初始化”: 从“double”到“float”截断
-  main.cpp
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\constant.h(9): warning C4305: “初始化”: 从“double”到“float”截断
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\multiobjects.h(28): warning C4018: “<”: 有符号/无符号不匹配
-  ImageSaver.cpp
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\imagesaver.cpp(59): warning C4838: 从“int”转换到“unsigned char”需要收缩转换
-  FileLoader.cpp
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\constant.h(9): warning C4305: “初始化”: 从“double”到“float”截断
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\multiobjects.h(28): warning C4018: “<”: 有符号/无符号不匹配
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\fileloader.cpp(111): warning C4018: “<”: 有符号/无符号不匹配
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\fileloader.cpp(225): warning C4018: “<”: 有符号/无符号不匹配
-  正在生成代码...
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\triangle.cpp(93): warning C4715: “Triangle::intersect”: 不是所有的控件路径都返回值
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\triangle.h(43): warning C4715: “Triangle::setVn”: 不是所有的控件路径都返回值
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\triangle.h(34): warning C4715: “Triangle::setV”: 不是所有的控件路径都返回值
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\triangle.h(51): warning C4715: “Triangle::setVt”: 不是所有的控件路径都返回值
+f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\fileloader.cpp(112): warning C4018: “<”: 有符号/无符号不匹配
+f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\fileloader.cpp(226): warning C4018: “<”: 有符号/无符号不匹配
   Ray_Tracing.vcxproj -> F:\研一下\path tracing\ray_tracing-Duan\Ray_Tracing\Debug\Ray_Tracing.exe
   Ray_Tracing.vcxproj -> F:\研一下\path tracing\ray_tracing-Duan\Ray_Tracing\Debug\Ray_Tracing.pdb (Partial PDB)

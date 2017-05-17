@@ -40,7 +40,7 @@ bool MTLLoader::loadMTL(const string path)
 		if (type == "newmtl")
 		{
 			Material material;
-			ss >> material.name;
+			ss >> material.name;			
 
 			while (true)
 			{
@@ -70,7 +70,10 @@ bool MTLLoader::loadMTL(const string path)
 					ss >> material.ka.g;
 					ss >> material.ka.b;
 
-					material.self_luminous = true;
+					if(material.ka.r>kEpsilon||
+							material.ka.g>kEpsilon|| 
+							material.ka.b>kEpsilon)
+						material.self_luminous = true;
 				}
 				else if (type == "Ks")
 				{
@@ -93,25 +96,23 @@ bool MTLLoader::loadMTL(const string path)
 					material.transparent = true;
 				}
 				else if (type == "newmtl")
-				{
-					materialList.push_back(material);
 					break;	// new material		
-				}
-			}
-		}
-	}
+			}			
+			materialList.push_back(material);
+		}				
+	}	
 	//Finally, reset to standard output again
 	cin.rdbuf(cinbuf);
 	return true;
 }
 
-bool MTLLoader::findMaterial(string materialName, Material *m)
+bool MTLLoader::findMaterial(string materialName, Material &m)
 {
 	// find the Material according to its name
 	for (int i = 0; i < materialList.size(); ++i)
 		if (materialList[i].name == materialName)
 		{
-			m = &(materialList[i]);
+			m = materialList[i];
 			return true;
 		}
 	return false;
@@ -142,10 +143,10 @@ vector<int> ObjLoader::split(const string &s, char delim) {
 	return elems;
 }
 
-bool ObjLoader::loadObj(const string path)
+bool ObjLoader::loadObj(const string path, const string name)
 {
 	// step 1: test whether the file exists 
-	ifstream in(path);
+	ifstream in(path+name);
 	if (in.fail())
 	{
 		cout << "The file does not exist!" << endl;
@@ -165,8 +166,7 @@ bool ObjLoader::loadObj(const string path)
 	}
 
 	// step 3: Load data
-	string type; // the data type, e.g. vertex, texture or group...
-	Scene scene; // the Scene object
+	string type; // the data type, e.g. vertex, texture or group...	
 	Group *recentGroup=new Group;
 	TriangleMesh *recentTriMesh=new TriangleMesh;
 
@@ -176,9 +176,6 @@ bool ObjLoader::loadObj(const string path)
 
 	do
 	{
-		if (line.empty())
-			continue;
-
 		ss.str(line); ss.clear();
 		ss >> type;
 		if (type == "mtllib")
@@ -192,8 +189,11 @@ bool ObjLoader::loadObj(const string path)
 		{
 			string name;
 			ss >> name;
-			recentGroup = new Group(name);
-			scene.add(*(dynamic_cast<Object *> (recentGroup)));
+			if (name != "default")
+			{
+				recentGroup = new Group(name);
+				scene.add(*(dynamic_cast<Object *> (recentGroup)));
+			}
 		}
 		else if (type == "usemtl")
 		{
@@ -201,7 +201,7 @@ bool ObjLoader::loadObj(const string path)
 			string materialName;
 			ss >> materialName;
 
-			if (!mtlLoder.findMaterial(materialName, &m))
+			if (!mtlLoder.findMaterial(materialName, m))
 			{
 				cout << "Don't have the material(ObjLoader)!" << endl;
 				break;
@@ -225,19 +225,19 @@ bool ObjLoader::loadObj(const string path)
 			for (int i = 0; i < face.size() - 2; ++i)
 			{
 				vector<Vec3f> vs;
-				vs.push_back(vertexList[face[0][0]]);
-				vs.push_back(vertexList[face[i + 1][0]]);
-				vs.push_back(vertexList[face[i + 2][0]]);
-
-				vector<Vec3f> vn;
-				vn.push_back(vertexNormalList[face[0][1]]);
-				vn.push_back(vertexNormalList[face[i + 1][1]]);
-				vn.push_back(vertexNormalList[face[i + 2][1]]);
+				vs.push_back(vertexList[face[0][0]-1]);
+				vs.push_back(vertexList[face[i + 1][0]-1]);
+				vs.push_back(vertexList[face[i + 2][0] - 1]);
 
 				vector<Vec2f> vt;
-				vt.push_back(vertexTextureList[face[0][2]]);
-				vt.push_back(vertexTextureList[face[i + 1][2]]);
-				vt.push_back(vertexTextureList[face[i + 2][2]]);
+				vt.push_back(vertexTextureList[face[0][1] - 1]);
+				vt.push_back(vertexTextureList[face[i + 1][1] - 1]);
+				vt.push_back(vertexTextureList[face[i + 2][1] - 1]);
+
+				vector<Vec3f> vn;
+				vn.push_back(vertexNormalList[face[0][2] - 1]);
+				vn.push_back(vertexNormalList[face[i + 1][2] - 1]);
+				vn.push_back(vertexNormalList[face[i + 2][2] - 1]);
 
 				Triangle tri(vs, vn, vt, smooth);
 				recentTriMesh->addTriangle(tri);
@@ -277,7 +277,7 @@ bool ObjLoader::loadObj(const string path)
 		}
 		
 		getline(cin, line);
-	} while (cin.eof());
+	} while (!cin.eof());
 	
 	// step 4: Finally, reset to standard output again
 	cin.rdbuf(cinbuf);
