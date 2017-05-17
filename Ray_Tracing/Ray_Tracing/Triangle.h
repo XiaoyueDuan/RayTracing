@@ -16,7 +16,7 @@ private:
 
 public:
 	AABBox bbox;
-	Triangle(vector<Vec3f> &vs, vector<Vec3f> &vn, vector<Vec3f> &vt, bool s);
+	Triangle(vector<Vec3f> &vs, vector<Vec3f> &vn, vector<Vec2f> &vt, bool s);
 	
 	bool intersect(const Vec3f &orig, const Vec3f &dir,
 					float &t, Vec2f &uv);
@@ -55,7 +55,7 @@ public:
 	bool getSmooth() { return smooth; }
 };
 
-Triangle::Triangle(vector<Vec3f> &vs, vector<Vec3f> &vns, vector<Vec3f> &vts, bool s)
+Triangle::Triangle(vector<Vec3f> &vs, vector<Vec3f> &vns, vector<Vec2f> &vts, bool s)
 {
 	// the sizes of vs, vns, vts are not 3
 	if (vs.size() != 3 || vns.size() != 3 || vts.size() != 3)
@@ -69,8 +69,8 @@ Triangle::Triangle(vector<Vec3f> &vs, vector<Vec3f> &vns, vector<Vec3f> &vts, bo
 	for (int i = 0; i < 3; ++i)
 	{
 		setV(vs[i], i);
-		setV(vns[i], i);
-		setV(vts[i], i);
+		setVn(vns[i], i);
+		setVt(vts[i], i);
 		
 		// Compare with vertex to find out max and min Position of the triangle
 		bbox.modify(vs[i]);

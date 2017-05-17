@@ -1,7 +1,7 @@
 #pragma once
 #include"MultiObjects.h"
 
-class Scene :MultiObjects
+class Scene :public MultiObjects
 {
 
 };

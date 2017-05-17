@@ -30,8 +30,8 @@ public:
 	// Method to compute the surface data such as normal and texture coordnates at the intersection point.
 	// See method implementation in children class for details
 	virtual void getSurfaceProperties(const Vec3f &hitPoint, const Vec3f &viewDirection,
-										const int &triIndex, const Vec2f &uv,
-										Vec3f &hitNormal, Vec2f &hitTextureCoordinates) const = 0;
+		const int &triIndex, const Vec2f &uv,
+		Vec3f &hitNormal, Vec2f &hitTextureCoordinates) const {}
 
 	virtual void add(Object &o)
 	{

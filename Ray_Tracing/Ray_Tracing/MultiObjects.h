@@ -5,14 +5,14 @@ class MultiObjects:public virtual Object
 {
 	// A derived class from Object. In the MultiObjects class, there will be 
 	// an attribute which is a vector<Object> array
-private:
-	vector<Object> list;
+protected:
+	vector<Object *> list;
 
 public:
 	virtual void add(Object &o)
 	{
 		Object::add(o);
-		list.push_back(o);
+		list.push_back(&o);
 	}
 
 	virtual bool intersect(const Vec3f &orig, const Vec3f &dir,
@@ -28,7 +28,7 @@ public:
 		for (int i = 0; i < list.size(); ++i)
 		{
 			int j;
-			if (list[i].intersect(orig, dir, t, j, UV) && t < tNear)
+			if (list.at(i)->intersect(orig, dir, t, j, UV) && t < tNear)
 			{
 				tNear = t;
 				// comment next two lines with UV being subsituted by uv!!!!!!!!!!!!!!!!!!!!! 
@@ -45,7 +45,7 @@ public:
 		const int &index, const Vec2f &uv,
 		Vec3f &hitNormal, Vec2f &hitTextureCoordinates) const
 	{
-		list[index].getSurfaceProperties(hitPoint, viewDirection, index, uv,
+		list.at(index)->getSurfaceProperties(hitPoint, viewDirection, index, uv,
 											hitNormal, hitTextureCoordinates);
 	}
 };

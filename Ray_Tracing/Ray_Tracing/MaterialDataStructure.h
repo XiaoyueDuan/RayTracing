@@ -127,8 +127,8 @@ public:
 	Tr tr;
 	Ni ni;
 
-	bool self_luminous;
-	bool transparent;
+	bool self_luminous=false; 
+	bool transparent=false;
 
 	Material(){}
 	Material(string name) 
