@@ -8,6 +8,8 @@ private:
 	string name;
 
 public:
+	Group(){}
+
 	Group(string name)
 	{
 		this->name = name;

@@ -1,11 +1,10 @@
 #pragma once
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <fstream>
 #include <sstream>
 #include <iostream>
-#include <fstream>
 #include <iterator>
+
 #include "MaterialDataStructure.h"
 #include "Object.h"
 #include"Group.h"
@@ -19,7 +18,8 @@ class MTLLoader
 public:
 	vector<Material> materialList;
 
-	bool loadMTL(const char * path);
+	//bool loadMTL(const char * path);
+	bool loadMTL(const string path);
 	bool findMaterial(string materialName, Material *m);
 };
 
@@ -30,10 +30,11 @@ private:
 	vector<Vec3f> vertexNormalList;
 	vector<Vec2f> vertexTextureList;
 
-	template<typename Out>
-	void split(const string &s, char delim, Out result);
+	//template<typename Out>
+	//void split(const string &s, char delim, Out result);
 	vector<int> split(const string &s, char delim);
 
 public:
-	bool loadObj(const char * path, const char * fileName);
+	//bool loadObj(const char * path, const char * fileName);
+	bool loadObj(const string path);
 };

@@ -77,5 +77,11 @@
     <ClCompile Include="ImageSaver.cpp">
       <Filter>头文件\IO</Filter>
     </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>头文件\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="TriangleMesh.cpp">
+      <Filter>头文件\Object</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

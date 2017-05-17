@@ -27,7 +27,7 @@ public:
 		Vec2f UV;
 		for (int i = 0; i < list.size(); ++i)
 		{
-			int j;
+			int j=0;
 			if (list.at(i)->intersect(orig, dir, t, j, UV) && t < tNear)
 			{
 				tNear = t;

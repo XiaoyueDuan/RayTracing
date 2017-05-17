@@ -1,13 +1,23 @@
-﻿  main.cpp
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\fileloader.h(21): error C2065: “Object”: 未声明的标识符
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\fileloader.h(21): error C2923: “std::vector”: 对于参数“_Ty”，“Object”不是有效的 模板 类型变量
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\fileloader.h(21): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\fileloader.h(23): warning C4624: “ObjLoader”: 已将析构函数隐式定义为“已删除”
+﻿  TriangleMesh.cpp
+f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\constant.h(9): warning C4305: “初始化”: 从“double”到“float”截断
+f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\multiobjects.h(28): warning C4018: “<”: 有符号/无符号不匹配
+f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\trianglemesh.cpp(14): warning C4018: “<”: 有符号/无符号不匹配
+  Triangle.cpp
+f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\constant.h(9): warning C4305: “初始化”: 从“double”到“float”截断
+  main.cpp
+f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\constant.h(9): warning C4305: “初始化”: 从“double”到“float”截断
+f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\multiobjects.h(28): warning C4018: “<”: 有符号/无符号不匹配
   ImageSaver.cpp
 f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\imagesaver.cpp(59): warning C4838: 从“int”转换到“unsigned char”需要收缩转换
   FileLoader.cpp
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\fileloader.h(21): error C2065: “Object”: 未声明的标识符
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\fileloader.h(21): error C2923: “std::vector”: 对于参数“_Ty”，“Object”不是有效的 模板 类型变量
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\fileloader.h(21): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\fileloader.h(23): warning C4624: “ObjLoader”: 已将析构函数隐式定义为“已删除”
+f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\constant.h(9): warning C4305: “初始化”: 从“double”到“float”截断
+f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\multiobjects.h(28): warning C4018: “<”: 有符号/无符号不匹配
+f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\fileloader.cpp(111): warning C4018: “<”: 有符号/无符号不匹配
+f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\fileloader.cpp(225): warning C4018: “<”: 有符号/无符号不匹配
   正在生成代码...
+f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\triangle.cpp(93): warning C4715: “Triangle::intersect”: 不是所有的控件路径都返回值
+f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\triangle.h(43): warning C4715: “Triangle::setVn”: 不是所有的控件路径都返回值
+f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\triangle.h(34): warning C4715: “Triangle::setV”: 不是所有的控件路径都返回值
+f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\triangle.h(51): warning C4715: “Triangle::setVt”: 不是所有的控件路径都返回值
+  Ray_Tracing.vcxproj -> F:\研一下\path tracing\ray_tracing-Duan\Ray_Tracing\Debug\Ray_Tracing.exe
+  Ray_Tracing.vcxproj -> F:\研一下\path tracing\ray_tracing-Duan\Ray_Tracing\Debug\Ray_Tracing.pdb (Partial PDB)

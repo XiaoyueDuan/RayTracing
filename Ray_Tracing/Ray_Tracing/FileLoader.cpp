@@ -1,7 +1,7 @@
 #include "FileLoader.h"
 
 // inline MTLLoader functions
-bool MTLLoader::loadMTL(const char * path)
+bool MTLLoader::loadMTL(const string path)
 {
 	// step 1: test whether the file exists 
 	ifstream in(path);
@@ -108,33 +108,44 @@ bool MTLLoader::loadMTL(const char * path)
 bool MTLLoader::findMaterial(string materialName, Material *m)
 {
 	// find the Material according to its name
-
+	for (int i = 0; i < materialList.size(); ++i)
+		if (materialList[i].name == materialName)
+		{
+			m = &(materialList[i]);
+			return true;
+		}
 	return false;
 }
 
 
 // inline ObjLoader functions
-template<typename Out>
-void ObjLoader::split(const string &s, char delim, Out result) {
+//template<typename Out>
+//void ObjLoader::split(const string &s, char delim, Out result) {
+//	stringstream ss;
+//	ss.str(s);
+//	string item;
+//	while (getline(ss, item, delim)) {
+//		*(result++) = item;
+//	}
+//}
+
+vector<int> ObjLoader::split(const string &s, char delim) {
+	vector<int> elems;
+
 	stringstream ss;
 	ss.str(s);
 	string item;
 	while (getline(ss, item, delim)) {
-		*(result++) = item;
+		int i=stoi(item);
+		elems.push_back(i);
 	}
-}
-
-vector<int> ObjLoader::split(const string &s, char delim) {
-	vector<int> elems;
-	split(s, delim, back_inserter(elems));
 	return elems;
 }
 
-bool ObjLoader::loadObj(const char * path, const char * fileName)
+bool ObjLoader::loadObj(const string path)
 {
 	// step 1: test whether the file exists 
 	ifstream in(path);
-	//ifstream in(path + fileName);
 	if (in.fail())
 	{
 		cout << "The file does not exist!" << endl;
@@ -145,108 +156,91 @@ bool ObjLoader::loadObj(const char * path, const char * fileName)
 	cin.rdbuf(in.rdbuf());				//redirect cin to file
 
 	// step 2: test whether the file is empty
-	string head;
-	getline(cin, head);
+	string line;
+	getline(cin, line);
 	if (cin.eof())
 	{
 		cout << "The file is empty!" << endl;
 		return false;
 	}
 
+	// step 3: Load data
 	string type; // the data type, e.g. vertex, texture or group...
 	Scene scene; // the Scene object
+	Group *recentGroup=new Group;
+	TriangleMesh *recentTriMesh=new TriangleMesh;
+
 	bool smooth; // whether the face is smooth or not
 	istringstream ss;
 	MTLLoader mtlLoder;
-	while (true)
+
+	do
 	{
-		getline(cin, head);
-		if (cin.eof())
-			break;		
-		if (head.empty())
+		if (line.empty())
 			continue;
 
-		ss.str(head); ss.clear();
+		ss.str(line); ss.clear();
 		ss >> type;
 		if (type == "mtllib")
 		{
 			string name;
 			ss >> name;
 			// mtlLoder.loadMTL(path+name);
-			mtlLoder.loadMTL(path);
+			mtlLoder.loadMTL(path+name);
 		}
 		else if (type == "g")
 		{
 			string name;
 			ss >> name;
+			recentGroup = new Group(name);
+			scene.add(*(dynamic_cast<Object *> (recentGroup)));
+		}
+		else if (type == "usemtl")
+		{
+			Material m;
+			string materialName;
+			ss >> materialName;
 
-			if (name != "default")
+			if (!mtlLoder.findMaterial(materialName, &m))
 			{
-				Group g(name);
-				scene.add(*(dynamic_cast<Object *> (&g)));
+				cout << "Don't have the material(ObjLoader)!" << endl;
+				break;
+			}
 
-				do
-				{
-					ss.str(head); ss.clear();
-					ss >> type;
-					if (type == "usemtl")
-					{
-						Material m;
-						string materialName;
-						ss >> materialName;
-						if (!mtlLoder.findMaterial(materialName, &m))
-						{
-							cout << "Don't have the material!" << endl;
-							break;//只能跳出一层循环，有问题，以后改
-						}
-						TriangleMesh triMesh(&m);
+			recentTriMesh = new TriangleMesh(&m);
+			recentGroup->add(*(dynamic_cast<Object *> (recentTriMesh)));
+		}
+		else if (type == "f")
+		{
+			vector<vector<int>> face;// (3 3 1) (4 4 2) (6 6 3) (5 5 4)
+			while (!ss.eof())
+			{
+				string vertex;
+				ss >> vertex;
 
-						while (true)
-						{
-							getline(cin, head);
-							ss.str(head); ss.clear();
-							ss >> type;
+				vector<int> x = split(vertex, '/');
+				face.push_back(x);
+			}
 
-							if (type == "usemtl")
-								break;
-							else if (type == "f")
-							{
-								vector<vector<int>> face;// (3 3 1) (4 4 2) (6 6 3) (5 5 4)
-								while (!ss.eof())
-								{
-									string vertex;
-									ss >> vertex;
+			for (int i = 0; i < face.size() - 2; ++i)
+			{
+				vector<Vec3f> vs;
+				vs.push_back(vertexList[face[0][0]]);
+				vs.push_back(vertexList[face[i + 1][0]]);
+				vs.push_back(vertexList[face[i + 2][0]]);
 
-									vector<int> x=split(vertex, '/');
-									face.push_back(x);
-								}	
+				vector<Vec3f> vn;
+				vn.push_back(vertexNormalList[face[0][1]]);
+				vn.push_back(vertexNormalList[face[i + 1][1]]);
+				vn.push_back(vertexNormalList[face[i + 2][1]]);
 
-								for (int i = 0; i < face.size() - 2; ++i)
-								{
-									vector<Vec3f> vs; 
-									vs.push_back(vertexList[face[0][0]]);
-									vs.push_back(vertexList[face[i+1][0]]);
-									vs.push_back(vertexList[face[i + 2][0]]);
+				vector<Vec2f> vt;
+				vt.push_back(vertexTextureList[face[0][2]]);
+				vt.push_back(vertexTextureList[face[i + 1][2]]);
+				vt.push_back(vertexTextureList[face[i + 2][2]]);
 
-									vector<Vec3f> vn; 
-									vn.push_back(vertexNormalList[face[0][1]]);
-									vn.push_back(vertexNormalList[face[i + 1][1]]);
-									vn.push_back(vertexNormalList[face[i + 2][1]]);
-
-									vector<Vec2f> vt;
-									vt.push_back(vertexTextureList[face[0][2]]);
-									vt.push_back(vertexTextureList[face[i + 1][2]]);
-									vt.push_back(vertexTextureList[face[i + 2][2]]);
-
-									Triangle tri(vs, vn, vt, smooth);
-									triMesh.addTriangle(tri);
-								}
-							} 
-						}
-						g.add(*dynamic_cast<Object *> (&triMesh));
-					}
-					getline(cin, head);
-				} while (cin.eof());
+				Triangle tri(vs, vn, vt, smooth);
+				recentTriMesh->addTriangle(tri);
 			}
 		}
 		else if (type == "v")
@@ -281,10 +275,11 @@ bool ObjLoader::loadObj(const char * path, const char * fileName)
 			else
 				smooth = true;
 		}
-
-	}
-
-	//Finally, reset to standard output again
+		
+		getline(cin, line);
+	} while (cin.eof());
+	
+	// step 4: Finally, reset to standard output again
 	cin.rdbuf(cinbuf);
 	return true;
 }

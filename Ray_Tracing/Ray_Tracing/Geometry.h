@@ -1,3 +1,5 @@
+#pragma once
+
 //[header]
 // This program illustrates how the concept of vector and matrix can be implemented
 // in C++. This is a light version of the implementation. It contains the most
