@@ -80,6 +80,11 @@ bool MTLLoader::loadMTL(const string path)
 					ss >> material.ks.r;
 					ss >> material.ks.g;
 					ss >> material.ks.b;
+
+					if (material.ks.r>kEpsilon ||
+						material.ks.g>kEpsilon ||
+						material.ks.b>kEpsilon)
+						material.specular = true;
 				}
 				else if (type == "Ns")
 				{

@@ -129,6 +129,7 @@ public:
 
 	bool self_luminous=false; 
 	bool transparent=false;
+	bool specular = false;
 
 	Material(){}
 	Material(string name) 

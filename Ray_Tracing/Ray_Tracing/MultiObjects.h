@@ -16,10 +16,10 @@ public:
 	}
 
 	virtual bool intersect(const Vec3f &orig, const Vec3f &dir,
-		float &tNear, int index, Vec2f &uv) const
+		float &tNear, int index, Vec2f &uv, Object &o) const
 	{
 		// 1. Use bounding box to judge roughly whether intersect first
-		Object::intersect(orig, dir, tNear, index, uv);
+		Object::intersect(orig, dir, tNear, index, uv, o);
 
 		// 2. The find out whether intersect and the intersect position
 		bool isect = false;
@@ -28,7 +28,7 @@ public:
 		for (int i = 0; i < list.size(); ++i)
 		{
 			int j=0;
-			if (list.at(i)->intersect(orig, dir, t, j, UV) && t < tNear)
+			if (list.at(i)->intersect(orig, dir, t, j, UV, o) && t < tNear)
 			{
 				tNear = t;
 				// comment next two lines with UV being subsituted by uv!!!!!!!!!!!!!!!!!!!!! 
@@ -43,7 +43,7 @@ public:
 
 	virtual void getSurfaceProperties(const Vec3f &hitPoint, const Vec3f &viewDirection,
 		const int &index, const Vec2f &uv,
-		Vec3f &hitNormal, Vec2f &hitTextureCoordinates) const
+		Vec3f &hitNormal, Vec2f &hitTextureCoordinates, Vec3f &Color) const
 	{
 		list.at(index)->getSurfaceProperties(hitPoint, viewDirection, index, uv,
 											hitNormal, hitTextureCoordinates);

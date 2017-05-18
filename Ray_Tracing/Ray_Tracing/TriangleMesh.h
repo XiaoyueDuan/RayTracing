@@ -5,14 +5,18 @@
 class TriangleMesh: public MultiObjects
 {
 private:
+	Vec3f color;
 	vector<Triangle> triangleList;
 	Material *material;
 public:
-	TriangleMesh(){}
-	TriangleMesh(Material *m) { material = m; }
+	TriangleMesh():color(Vec3f(1.0)) { }
+	TriangleMesh(Material *m) 
+	{ 
+		material = m; 
+	}
 
 	bool intersect(const Vec3f &orig, const Vec3f &dir, 
-					float &t, int triIndex, Vec2f &uv);
+					float &t, int triIndex, Vec2f &uv, Object &o);
 
 	void getSurfaceProperties(const Vec3f &hitPoint, const Vec3f &viewDirection,
 								const int &triIndex, const Vec2f &uv,

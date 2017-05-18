@@ -9,7 +9,6 @@ using namespace std;
 class Object
 {
 protected:
-	Vec3f color;
 	AABBox aabb;
 
 public:
@@ -19,7 +18,7 @@ public:
 	// Returns true if an intersection was found, false otherwise
 	// See method implementation in children class for details
 	virtual bool intersect(const Vec3f &orig, const Vec3f &dir, float &t,
-		int Index, Vec2f &uv) const
+		int Index, Vec2f &uv, Object &o) const
 	{
 		if (!aabb.intersect(orig, dir))
 			return false;

@@ -8,14 +8,16 @@ public:
 	float radius;
 	float radius2; // radius^2
 	Vec3f center;
+	Vec3f color;
 	Material *material;
 
-	Sphere(const Vec3f &c, const float &r) : radius(r), radius2(r*r), center(c) {}
+	Sphere(const Vec3f &c, const float &r) : radius(r), radius2(r*r), center(c),
+											 color(Vec3f(1.0)) {}
 	// Ray-sphere intersection 
 	//	orig: the ray origin
 	//	dir:  the ray direction
 	//	t(out): the distance from the ray origin to the intersection point
-	bool intersect(const Vec3f &orig, const Vec3f &dir, float &t, int triIndex, Vec2f &uv) const
+	bool intersect(const Vec3f &orig, const Vec3f &dir, float &t, int triIndex, Vec2f &uv, Object &o) const
 	{
 		float t0, t1; // solutions for t if the ray intersects
 
@@ -37,6 +39,7 @@ public:
 			if (t0 < 0) return false; // both t0 and t1 are negative
 		}
 		t = t0;
+		o = *this;
 		return true;
 	}
 	

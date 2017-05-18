@@ -25,6 +25,9 @@
     <Filter Include="头文件\Object">
       <UniqueIdentifier>{2f1527ed-217a-476a-9f73-ac44df6ff6c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Other">
+      <UniqueIdentifier>{018a4da2-b2b1-4a79-a839-25314be8e499}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Geometry.h">
@@ -35,9 +38,6 @@
     </ClInclude>
     <ClInclude Include="AABB.h">
       <Filter>头文件\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Constant.h">
-      <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="FileLoader.h">
       <Filter>头文件\IO</Filter>
@@ -66,6 +66,12 @@
     <ClInclude Include="Scene.h">
       <Filter>头文件\Object</Filter>
     </ClInclude>
+    <ClInclude Include="Constant.h">
+      <Filter>头文件\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="Options.h">
+      <Filter>头文件\Other</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -83,5 +89,8 @@
     <ClCompile Include="TriangleMesh.cpp">
       <Filter>头文件\Object</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

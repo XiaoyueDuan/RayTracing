@@ -1,7 +1,2 @@
-﻿  FileLoader.cpp
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\constant.h(9): warning C4305: “初始化”: 从“double”到“float”截断
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\multiobjects.h(28): warning C4018: “<”: 有符号/无符号不匹配
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\fileloader.cpp(112): warning C4018: “<”: 有符号/无符号不匹配
-f:\研一下\path tracing\ray_tracing-duan\ray_tracing\ray_tracing\fileloader.cpp(226): warning C4018: “<”: 有符号/无符号不匹配
-  Ray_Tracing.vcxproj -> F:\研一下\path tracing\ray_tracing-Duan\Ray_Tracing\Debug\Ray_Tracing.exe
+﻿  Ray_Tracing.vcxproj -> F:\研一下\path tracing\ray_tracing-Duan\Ray_Tracing\Debug\Ray_Tracing.exe
   Ray_Tracing.vcxproj -> F:\研一下\path tracing\ray_tracing-Duan\Ray_Tracing\Debug\Ray_Tracing.pdb (Partial PDB)
