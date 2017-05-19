@@ -63,6 +63,11 @@ bool MTLLoader::loadMTL(const string path)
 					ss >> material.kd.r;
 					ss >> material.kd.g;
 					ss >> material.kd.b;
+
+					if (material.kd.r>kEpsilon ||
+						material.kd.g>kEpsilon ||
+						material.kd.b>kEpsilon)
+						material.diffuse = true;
 				}
 				else if (type == "Ka")
 				{

@@ -28,11 +28,11 @@
     <Filter Include="头文件\Other">
       <UniqueIdentifier>{018a4da2-b2b1-4a79-a839-25314be8e499}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\RayTracing">
+      <UniqueIdentifier>{25b265e7-da20-462f-ad19-6e4cf6021541}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Geometry.h">
-      <Filter>头文件\Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="MaterialDataStructure.h">
       <Filter>头文件\Material</Filter>
     </ClInclude>
@@ -72,6 +72,12 @@
     <ClInclude Include="Options.h">
       <Filter>头文件\Other</Filter>
     </ClInclude>
+    <ClInclude Include="PathTracing.h">
+      <Filter>头文件\RayTracing</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry.h">
+      <Filter>头文件\Geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -88,6 +94,9 @@
     </ClCompile>
     <ClCompile Include="TriangleMesh.cpp">
       <Filter>头文件\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="PathTracing.cpp">
+      <Filter>头文件\RayTracing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

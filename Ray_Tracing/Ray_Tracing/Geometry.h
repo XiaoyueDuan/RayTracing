@@ -1,5 +1,4 @@
 #pragma once
-
 //[header]
 // This program illustrates how the concept of vector and matrix can be implemented
 // in C++. This is a light version of the implementation. It contains the most
@@ -81,6 +80,8 @@ public:
     Vec3() : x(T(0)), y(T(0)), z(T(0)) {}
     Vec3(T xx) : x(xx), y(xx), z(xx) {}
     Vec3(T xx, T yy, T zz) : x(xx), y(yy), z(zz) {}
+    
+    // const operators
     Vec3 operator + (const Vec3 &v) const
     { return Vec3(x + v.x, y + v.y, z + v.z); }
     Vec3 operator - (const Vec3 &v) const
@@ -93,16 +94,23 @@ public:
     { return Vec3(x * v.x, y * v.y, z * v.z); }
     T dotProduct(const Vec3<T> &v) const
     { return x * v.x + y * v.y + z * v.z; }
+    Vec3 operator / (const T &r) const
+    { return Vec3(x / r, y / r, z / r); }
+    
     Vec3& operator /= (const T &r)
     { x /= r, y /= r, z /= r; return *this; }
     Vec3& operator *= (const T &r)
     { x *= r, y *= r, z *= r; return *this; }
+    Vec3& operator += (const Vec3 &v)
+    { x += v.x, y += v.y, z += v.z; return *this; }
+    
     Vec3 crossProduct(const Vec3<T> &v) const
     { return Vec3<T>(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x); }
     T norm() const
     { return x * x + y * y + z * z; }
     T length() const
     { return sqrt(norm()); }
+
     //[comment]
     // The next two operators are sometimes called access operators or
     // accessors. The Vec coordinates can be accessed that way v[0], v[1], v[2],
@@ -157,6 +165,7 @@ class Matrix44
 public:
 
     T x[4][4] = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
+    static const Matrix44 kIdentity;
 
     Matrix44() {}
 
@@ -503,32 +512,3 @@ public:
 };
 
 typedef Matrix44<float> Matrix44f;
-
-//[comment]
-// Testing our code. To test the matrix inversion code, we used Maya to output
-// the values of a matrix and its inverse (check the video at the top of this page). Of course this implies
-// that Maya actually does the right thing, but we can probably agree, that is actually does;).
-// These are the values for the input matrix:
-//
-// 0.707107 0 -0.707107 0 -0.331295 0.883452 -0.331295 0 0.624695 0.468521 0.624695 0 4.000574 3.00043 4.000574 1
-//
-// Given the input matrix, the inverse matrix computed by our code should match the following values:
-//
-// 0.707107 -0.331295 0.624695 0 0 0.883452 0.468521 0 -0.707107 -0.331295 0.624695 0 0 0 -6.404043 1
-//[/comment]
-#if 0
-int main(int argc, char **argv)
-{
-    Vec3f v(0, 1, 2);
-    std::cerr << v << std::endl;
-    Matrix44f a, b, c;
-    c = a * b;
-
-    Matrix44f d(0.707107, 0, -0.707107, 0, -0.331295, 0.883452, -0.331295, 0, 0.624695, 0.468521, 0.624695, 0, 4.000574, 3.00043, 4.000574, 1);
-    std::cerr << d << std::endl;
-    d.invert();
-    std::cerr << d << std::endl;
-
-    return 0;
-}
-#endif

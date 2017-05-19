@@ -3,6 +3,7 @@
 // The description of file format from; http://paulbourke.net/dataformats/mtl/
 #include <vector>
 #include <string>
+#include "Geometry.h"
 
 using namespace std;
 
@@ -30,6 +31,12 @@ public:
 		g = 0.0;
 		b = 0.0;
 	}
+	Vec3f operator * (const Vec3f &v)
+	{
+		return Vec3f(v.x* r, v.y*g, v.z*b);
+	}	
+	friend Vec3f operator * (const Vec3f &v, const Kd &kd )
+	{	return Vec3f(v.x*kd.r, v.y*kd.g, v.z*kd.b);}
 };
 
 class Ka :public Attribute
@@ -51,6 +58,15 @@ public:
 		g = 0.0;
 		b = 0.0;
 	}
+
+	Vec3f operator * (const Vec3f &v)
+	{
+		return Vec3f(v.x* r, v.y*g, v.z*b);
+	}
+	friend Vec3f operator * (const Vec3f &v, const Ka &ka)
+	{
+		return Vec3f(v.x*ka.r, v.y*ka.g, v.z*ka.b);
+	}
 };
 
 class Ks :public Attribute
@@ -70,6 +86,15 @@ public:
 		r = 0.0;
 		g = 0.0;
 		b = 0.0;
+	}
+
+	Vec3f operator * (const Vec3f &v)
+	{
+		return Vec3f(v.x* r, v.y*g, v.z*b);
+	}
+	friend Vec3f operator * (const Vec3f &v, const Ks &ks)
+	{
+		return Vec3f(v.x* ks.r, v.y* ks.g, v.z* ks.b);
 	}
 };
 
@@ -130,6 +155,7 @@ public:
 	bool self_luminous=false; 
 	bool transparent=false;
 	bool specular = false;
+	bool diffuse = false;
 
 	Material(){}
 	Material(string name) 

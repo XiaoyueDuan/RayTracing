@@ -20,7 +20,8 @@ public:
 
 	void getSurfaceProperties(const Vec3f &hitPoint, const Vec3f &viewDirection,
 								const int &triIndex, const Vec2f &uv,
-								Vec3f &hitNormal, Vec2f &hitTextureCoordinates);
+								Vec3f &hitNormal, Vec2f &hitTextureCoordinates,
+								Vec3f &Color, Material *m);
 	
 	void addTriangle(Triangle &tri) 
 	{ 
