@@ -19,34 +19,35 @@ int main(int argc, char *argv[])
 	Sphere sphere1(Vec3f(-2.88, 2, -2.5), 2);
 	Sphere sphere2(Vec3f(2.88, 2, 2.5), 2);	
 
-	Material m1;
+	Material *m1=nullptr;
 	string sphere1materialName="sphere_mirror";
-	Material m2;
+	Material *m2=nullptr;
 	string sphere2materialName = "sphere_transparent";
 
 	if (!objLoader.mtlLoder.findMaterial(sphere1materialName, m1)||
 		!objLoader.mtlLoder.findMaterial(sphere2materialName, m2))
 	{
-		cout << "Don't have the material(ObjLoader)!" << endl;
+		cout << "No such material(main.cpp)!" << endl;
 		return 0;
 	}
-	sphere1.material = &m1;
-	sphere2.material = &m2;
+	sphere1.material = m1;
+	sphere2.material = m2;
 
 	objLoader.scene.add(*(dynamic_cast<Object *> (&sphere1)));
 	objLoader.scene.add(*(dynamic_cast<Object *> (&sphere2)));
 	
 	Options option;
-	option.setCameraToWorldCoordinate(Vec3f(0, 0, 10), Vec3f(0, 0, 0), Vec3f(0, 1, 0));
-	option.width = 100;
-	option.height = 100;
+	option.setCameraToWorldCoordinate(Vec3f(0, 5, 10), Vec3f(0, 5, 0), Vec3f(0, 1, 0));
+	//option.width = 120;
+	//option.height = 100;
+	option.maxDepth = 3;
 
 	int n = option.width*option.height;
 	Vec3f *pixels = new Vec3f[n];
 
 	render(option, objLoader.scene, pixels);
 	int dpi = 72;
-	string saveFileName = "scene_anti-aliased.bmp";
+	string saveFileName = "sceneDepth3.bmp";
 	savebmp(saveFileName, option.width, option.height, dpi, pixels);
 
 	return 0;

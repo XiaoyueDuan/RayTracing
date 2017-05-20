@@ -20,7 +20,7 @@ public:
 
 	//bool loadMTL(const char * path);
 	bool loadMTL(const string path);
-	bool findMaterial(string materialName, Material &m);
+	bool findMaterial(string materialName, Material *&m);
 };
 
 class ObjLoader

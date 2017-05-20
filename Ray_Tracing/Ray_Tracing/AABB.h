@@ -69,8 +69,8 @@ public:
 		bounds[0].y = (v.y < bounds[0].y) ? v.y : bounds[0].y;
 		bounds[0].z = (v.z < bounds[0].z) ? v.z : bounds[0].z;
 
-		bounds[1].x = (v.x < bounds[1].x) ? v.x : bounds[1].x;
-		bounds[1].y = (v.y < bounds[1].y) ? v.y : bounds[1].y;
-		bounds[1].z = (v.z < bounds[1].z) ? v.z : bounds[1].z;
+		bounds[1].x = (v.x > bounds[1].x) ? v.x : bounds[1].x;
+		bounds[1].y = (v.y > bounds[1].y) ? v.y : bounds[1].y;
+		bounds[1].z = (v.z > bounds[1].z) ? v.z : bounds[1].z;
 	}
 };

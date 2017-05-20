@@ -69,7 +69,7 @@ Vec3f castRay(
 	float tnear = kInfinity;
 	Vec2f uv;
 	int index = 0;
-	Object hitObject;
+	Object *hitObject=nullptr;
 	if (scene.intersect(orig, dir, tnear, index, uv, hitObject))
 	{
 		// get the surface properties, including:
@@ -83,7 +83,7 @@ Vec3f castRay(
 		Vec2f hitTexCoordinates;
 		Vec3f Color;
 		Material *m = nullptr;
-		hitObject.getSurfaceProperties(hitPoint, dir, index, uv, hitNormal, hitTexCoordinates, Color, m);
+		hitObject->getSurfaceProperties(hitPoint, dir, index, uv, hitNormal, hitTexCoordinates, Color, m);
 
 		// If the hit point is light source
 		if (m->self_luminous)
@@ -93,7 +93,7 @@ Vec3f castRay(
 		if (m->diffuse)
 		{
 			Vec3f indirectLigthing = 0;
-			int N = 128;// / (depth + 1);
+			int N = 16;// / (depth + 1);
 			Vec3f Nt, Nb;
 			createCoordinateSystem(hitNormal, Nt, Nb);
 			float pdf = 1 / (2 * M_PI);
@@ -147,22 +147,34 @@ Vec3f castRay(
 void render(
 	const Options &options,
 	Scene &scene,
-	Vec3f *pixels)
+	Vec3f *pixels,
+	int N=100)
 {
 	float scale = tan(options.fov * 0.5*M_PI / 180);
 	float imageAspectRatio = options.width / (float)options.height;
 	Vec3f orig;
 	options.cameraToWorld.multVecMatrix(Vec3f(0), orig);
 	for (int j = 0; j < options.height; ++j) {
+		cout << (j + 1) / 4.8 <<"%"<< endl;
 		for (int i = 0; i < options.width; ++i) {
-			// generate primary ray direction
-			float x = (2 * (i + 0.5) / (float)options.width - 1) * imageAspectRatio * scale;
-			float y = (1 - 2 * (j + 0.5) / (float)options.height) * scale;
-			Vec3f dir;
-			options.cameraToWorld.multDirMatrix(Vec3f(x, y, -1), dir);
-			dir.normalize();
-			
-			*pixels++ = castRay(orig, dir, scene, options, 0);// pixel++!!!!!!!!!!!!!!!!! 
+			Vec3f color;
+			for (int w = 0; w < N; ++w)
+			{
+				// generate primary ray direction
+				float r1 = distribution(generator);
+				float r2 = distribution(generator);
+				float x = (2 * (i + r1) / (float)options.width - 1) * imageAspectRatio * scale;
+				float y = (1 - 2 * (j + r2) / (float)options.height) * scale;
+				//float x = (2 * (i + 0.5) / (float)options.width - 1) * imageAspectRatio * scale;
+				//float y = (1 - 2 * (j + 0.5) / (float)options.height) * scale;
+				Vec3f dir;
+				options.cameraToWorld.multDirMatrix(Vec3f(x, y, -1), dir);
+				dir.normalize();
+
+				color+= castRay(orig, dir, scene, options, 0);
+			}
+			(*pixels) = color/N;
+			pixels++;
 		}
 	}
 }

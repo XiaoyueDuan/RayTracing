@@ -1,7 +1,7 @@
 #include"TriangleMesh.h"
 
 bool TriangleMesh::intersect(const Vec3f &orig, const Vec3f &dir,
-	float &tNear, int triIndex, Vec2f &uv, Object &o)
+	float &tNear, int triIndex, Vec2f &uv, Object *&o)
 {
 	// 1. Use bounding box to judge roughly whether intersect first
 	if (!aabb.intersect(orig, dir))
@@ -21,7 +21,7 @@ bool TriangleMesh::intersect(const Vec3f &orig, const Vec3f &dir,
 			uv.y = UV.y;
 			triIndex = i;
 			isect = true;
-			o = *this;
+			o = this;
 		}
 	}	
 	return isect;
@@ -30,7 +30,7 @@ bool TriangleMesh::intersect(const Vec3f &orig, const Vec3f &dir,
 void TriangleMesh::getSurfaceProperties(const Vec3f &hitPoint, const Vec3f &viewDirection,
 	const int &triIndex, const Vec2f &uv,
 	Vec3f &hitNormal, Vec2f &hitTextureCoordinates,
-	Vec3f &Color, Material *m)
+	Vec3f &Color, Material *&m)
 {
 	if (triangleList[triIndex].getSmooth())
 		triangleList[triIndex].getProperties(uv, hitNormal, hitTextureCoordinates);
@@ -38,5 +38,6 @@ void TriangleMesh::getSurfaceProperties(const Vec3f &hitPoint, const Vec3f &view
 		triangleList[triIndex].getNormal(hitNormal);
 
 	Color = color;
+	// Color = Vec3f(1.0);
 	m = material;
 }

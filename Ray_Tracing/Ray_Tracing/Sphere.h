@@ -22,7 +22,7 @@ public:
 	//	orig: the ray origin
 	//	dir:  the ray direction
 	//	t(out): the distance from the ray origin to the intersection point
-	bool intersect(const Vec3f &orig, const Vec3f &dir, float &tNear, int Index, Vec2f &uv, Object &o)
+	bool intersect(const Vec3f &orig, const Vec3f &dir, float &tNear, int Index, Vec2f &uv, Object *&o)
 	{
 		float t0, t1; // solutions for t if the ray intersects
 
@@ -49,8 +49,8 @@ public:
 		if (t0 < tNear && t0>kEpsilon)
 		{
 			tNear = t0;
-			//o = *this;
-			o= * (dynamic_cast<Object *> (this));			
+			o = this;
+			//o= * (dynamic_cast<Object *> (this));			
 			return true;
 		}
 		return false;
@@ -66,7 +66,7 @@ public:
 	void getSurfaceProperties(const Vec3f &hitPoint, const Vec3f &viewDirection,
 		const int &triIndex, const Vec2f &uv,
 		Vec3f &hitNormal, Vec2f &hitTextureCoordinates,
-		Vec3f &Color, Material *m)
+		Vec3f &Color, Material *&m)
 	{
 		// In this particular case, the normal is simular to a point on a unit sphere
 		// centred around the origin. We can thus use the normal coordinates to compute

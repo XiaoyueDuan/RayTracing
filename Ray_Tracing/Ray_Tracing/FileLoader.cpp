@@ -116,13 +116,13 @@ bool MTLLoader::loadMTL(const string path)
 	return true;
 }
 
-bool MTLLoader::findMaterial(string materialName, Material &m)
+bool MTLLoader::findMaterial(string materialName, Material *&m)
 {
 	// find the Material according to its name
 	for (int i = 0; i < materialList.size(); ++i)
 		if (materialList[i].name == materialName)
 		{
-			m = materialList[i];
+			m = &(materialList[i]);
 			return true;
 		}
 	return false;
@@ -210,7 +210,7 @@ bool ObjLoader::loadObj(const string path, const string name)
 		}
 		else if (type == "usemtl")
 		{
-			Material m;
+			Material *m=nullptr;
 			string materialName;
 			ss >> materialName;
 
@@ -220,7 +220,7 @@ bool ObjLoader::loadObj(const string path, const string name)
 				break;
 			}
 
-			recentTriMesh = new TriangleMesh(&m);
+			recentTriMesh = new TriangleMesh(m);
 			recentGroup->add(*(dynamic_cast<Object *> (recentTriMesh)));
 		}
 		else if (type == "f")
