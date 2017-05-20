@@ -4,10 +4,12 @@
 #include <sstream>
 #include <string>
 
-struct RGBType {
-	double r;
-	double g;
-	double b;
-};
+#include "Geometry.h"
+#include "FileLoader.h" // why #include <string> is useless?
+//struct RGBType {
+//	double r;
+//	double g;
+//	double b;
+//};
 
-void savebmp(const char *filename, int w, int h, int dpi, RGBType *data);
+void savebmp(string filename, int w, int h, int dpi, Vec3f *data);

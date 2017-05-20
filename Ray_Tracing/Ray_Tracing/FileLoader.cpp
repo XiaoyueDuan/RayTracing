@@ -182,13 +182,16 @@ bool ObjLoader::loadObj(const string path, const string name)
 
 	bool smooth; // whether the face is smooth or not
 	istringstream ss;
-	MTLLoader mtlLoder;
 
 	do
 	{
 		ss.str(line); ss.clear();
 		ss >> type;
-		if (type == "mtllib")
+		if (line == "")
+		{
+			// Do nothing
+		}
+		else if (type == "mtllib")
 		{
 			string name;
 			ss >> name;

@@ -39,4 +39,5 @@ public:
 	//bool loadObj(const char * path, const char * fileName);
 	//bool loadObj(const string path);
 	bool loadObj(const string path, const string name);
+	MTLLoader mtlLoder;
 };

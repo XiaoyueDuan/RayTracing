@@ -12,13 +12,17 @@ public:
 	Material *material;
 
 	Sphere(const Vec3f &c, const float &r) : radius(r), radius2(r*r), center(c),
-											 color(Vec3f(1.0)) {}
+											 color(Vec3f(1.0)) 
+	{
+		aabb.bounds[0] = c-r;
+		aabb.bounds[1] = c+r;
+	}
 
 	// Ray-sphere intersection 
 	//	orig: the ray origin
 	//	dir:  the ray direction
 	//	t(out): the distance from the ray origin to the intersection point
-	bool intersect(const Vec3f &orig, const Vec3f &dir, float &tNear, int triIndex, Vec2f &uv, Object &o)
+	bool intersect(const Vec3f &orig, const Vec3f &dir, float &tNear, int Index, Vec2f &uv, Object &o)
 	{
 		float t0, t1; // solutions for t if the ray intersects
 
@@ -45,7 +49,8 @@ public:
 		if (t0 < tNear && t0>kEpsilon)
 		{
 			tNear = t0;
-			o = *this;
+			//o = *this;
+			o= * (dynamic_cast<Object *> (this));			
 			return true;
 		}
 		return false;
@@ -58,7 +63,7 @@ public:
 	//	texture(out):the texture coordinates at hit point
 	//	Color(out): the color of the sphere
 	//	m(out): the Material pointer of the sphere
-	void getSurfaceData(const Vec3f &hitPoint, const Vec3f &viewDirection,
+	void getSurfaceProperties(const Vec3f &hitPoint, const Vec3f &viewDirection,
 		const int &triIndex, const Vec2f &uv,
 		Vec3f &hitNormal, Vec2f &hitTextureCoordinates,
 		Vec3f &Color, Material *m)
