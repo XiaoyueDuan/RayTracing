@@ -43,18 +43,19 @@ public:
 	Vec3f backgroundColor = kDefaultBackgroundColor;
 	Matrix44f cameraToWorld;
 	float bias = 0.0001;
-	int maxDepth = 2;
+	int minDepth = 2;
+	int maxDepth = 100;
 
 	void setCameraToWorldCoordinate(const Vec3f& from, const Vec3f& to, Vec3f& tmp = Vec3f(0, 1, 0))
 	{
-		// from-to OR to-from???
-		// Vec3f forward = (to-from).normalize();
-		// Vec3f right = tmp.normalize().crossProduct(forward);
-		// Vec3f up = right.crossProduct(forward);
+		 //from-to OR to-from???
+		 Vec3f forward = (to-from).normalize();
+		 Vec3f right = tmp.normalize().crossProduct(forward);
+		 Vec3f up = right.crossProduct(forward);
 
-		Vec3f forward = (from - to).normalize();
-		Vec3f right = tmp.normalize().crossProduct(forward);
-		Vec3f up = forward.crossProduct(right);
+		//Vec3f forward = (from - to).normalize();
+		//Vec3f right = tmp.normalize().crossProduct(forward);
+		//Vec3f up = forward.crossProduct(right);
 
 		cameraToWorld[0][0] = right.x;
 		cameraToWorld[0][1] = right.y;
