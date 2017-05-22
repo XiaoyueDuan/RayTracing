@@ -22,7 +22,7 @@ public:
 	//	orig: the ray origin
 	//	dir:  the ray direction
 	//	t(out): the distance from the ray origin to the intersection point
-	bool intersect(const Vec3f &orig, const Vec3f &dir, float &tNear, int Index, Vec2f &uv, Object *&o)
+	bool intersect(const Vec3f &orig, const Vec3f &dir, float &tNear, int &Index, Vec2f &uv, Object *&o)
 	{
 		float t0, t1; // solutions for t if the ray intersects
 

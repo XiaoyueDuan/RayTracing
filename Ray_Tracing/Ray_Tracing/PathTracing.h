@@ -9,8 +9,8 @@
 #include "ImageSaver.h"
 #include "Light.h"
 
-default_random_engine generator;
-uniform_real_distribution<double> distribution(0.0, 1.0);
+//default_random_engine generator;
+//uniform_real_distribution<double> distribution(0.0, 1.0);
 //enum MaterialType { DIFF, SPEC, REFR };
 
 class Path
@@ -104,12 +104,12 @@ public:
 Vec3f castRay(
 	const Vec3f &orig, const Vec3f &dir,
 	Scene &scene,
-	vector<Light> &lights,
+	vector<Light *> &lights,
 	const Options &options,
 	const int depth,
-	const int N = 16)
+	const int N = 1)
 {
-	if (depth > options.maxDepth)
+	if (depth > options.depth)
 		return options.backgroundColor;
 
 	Vec3f hitColor = options.backgroundColor;
@@ -140,37 +140,47 @@ Vec3f castRay(
 		// If it's diffuse
 		if (m->diffuse)
 		{
+			random_device rd;  //Will be used to obtain a seed for the random number engine
+			mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+
+			//default_random_engine generator;
+			uniform_real_distribution<float> distribution(0.0, 1.0);
+
 			Vec3f directLighting = 0;
 			for (int i = 0; i < lights.size(); ++i)
 			{
 				Vec3f lightDir, lightIntensity;
 				float tNear;
-				lights[i].illuminate(hitPoint, lightDir, lightIntensity, tNear);
+				lights[i]->illuminate(hitPoint, lightDir, lightIntensity, tNear);
 
-				int index;
-				bool vis = !scene.intersect(hitPoint, -lightDir, tnear, index, uv, hitObject);
+				int index=0;
+				bool vis = !scene.intersect(hitPoint, -lightDir, tNear, index, uv, hitObject);
+				// directLighting += vis * lightIntensity * abs(hitNormal.dotProduct(-lightDir));
 				directLighting+=vis * lightIntensity * max(0.f, hitNormal.dotProduct(-lightDir));
 			}
+			hitColor = directLighting*m->kd;
 
 			Vec3f indirectLigthing = 0;
 			Vec3f Nt, Nb;
 			path.createCoordinateSystem(hitNormal, Nt, Nb);
 			float pdf = 1 / (2 * M_PI);
 			for (int n = 0; n < N; ++n) {
-				float r1 = distribution(generator);
-				float r2 = distribution(generator);
+				float r1 = distribution(gen);
+				float r2 = distribution(gen);
+				//float r1 = distribution(generator);
+				//float r2 = distribution(generator);
 				Vec3f sample = path.uniformSampleHemisphere(r1, r2);
 				Vec3f sampleWorld(
 					sample.x * Nb.x + sample.y * hitNormal.x + sample.z * Nt.x,
 					sample.x * Nb.y + sample.y * hitNormal.y + sample.z * Nt.y,
 					sample.x * Nb.z + sample.y * hitNormal.z + sample.z * Nt.z);
 				// don't forget to divide by PDF and multiply by cos(theta)
-				indirectLigthing += r1 * castRay(hitPoint, sampleWorld, scene, lights, options, depth + 1) / pdf;
-				//indirectLigthing += castRay(hitPoint, sampleWorld, scene, options, depth + 1) / pdf;
+				//indirectLigthing += r1 * castRay(hitPoint, sampleWorld, scene, lights, options, depth + 1) / pdf;
+				indirectLigthing += r1 * castRay(hitPoint, sampleWorld, scene, lights, options, depth + 1);
 			}
 			// divide by N
 			indirectLigthing /= (float)N;
-			hitColor +=(directLighting/M_PI + 2 * indirectLigthing)*m->kd;
+			hitColor =(directLighting + 2 * indirectLigthing)*m->kd;
 		}
 
 		// If it's specular
@@ -212,11 +222,21 @@ Vec3f castRay(
 //	return false;
 //}
 
+Vec3f trim(Vec3f &v)
+{
+	Vec3f result;
+	result.x = max(0.0f, min(v.x, 1.0f));
+	result.y = max(0.0f, min(v.y, 1.0f));
+	result.z = max(0.0f, min(v.z, 1.0f));
+
+	return result;
+}
+
 void render(
 	const Options &options,
 	Scene &scene,
 	Vec3f *pixels,
-	vector<Light> &lights,
+	vector<Light *> &lights,
 	int N = 100)
 {
 	float scale = tan(options.fov * 0.5*M_PI / 180);
@@ -225,16 +245,20 @@ void render(
 	options.cameraToWorld.multVecMatrix(Vec3f(0), orig);
 	Vec3f *start = pixels;
 
-	for (int j = 0; j < options.height; ++j) {
-		cout << (j + 1) / 4.8 << "%" << endl;
+	for (int j = 0; j , options.height; ++j) {
+		cout << j << endl;
 		for (int i = 0; i < options.width; ++i) {
 			Vec3f color;
 			int nValid = 0;
 			for (int w = 0; w < N; ++w)
 			{
+				random_device rd;  //Will be used to obtain a seed for the random number engine
+				mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()								   
+				uniform_real_distribution<float> distribution(0.0, 1.0);//default_random_engine generator;
+
 				// generate primary ray direction
-				float r1 = distribution(generator);
-				float r2 = distribution(generator);
+				float r1 = distribution(gen);
+				float r2 = distribution(gen);
 				float x = (2 * (i + r1) / (float)options.width - 1) * imageAspectRatio * scale;
 				float y = (1 - 2 * (j + r2) / (float)options.height) * scale;
 				//float x = (2 * (i + 0.5) / (float)options.width - 1) * imageAspectRatio * scale;
@@ -245,17 +269,13 @@ void render(
 
 				Vec3f newColor = castRay(orig, dir, scene, lights, options, 0);
 				color += newColor;
-				//if (hitLight(newColor))
-				//{
-				//	++nValid;
-				//	color += newColor;
-				//}
 			}
-			(*pixels) = color / float(N);
+			
+			(*pixels) = trim(color / float(N));
 			pixels++;
 		}
 
-		if (j % 20 == 0)
+		if (j %20==0)
 		{
 			int dpi = 72;
 			string saveFileName = "result/" + to_string(j) + ".bmp";

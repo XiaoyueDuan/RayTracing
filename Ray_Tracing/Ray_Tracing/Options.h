@@ -43,8 +43,7 @@ public:
 	Vec3f backgroundColor = kDefaultBackgroundColor;
 	Matrix44f cameraToWorld;
 	float bias = 0.0001;
-	int minDepth = 2;
-	int maxDepth = 100;
+	int depth = 2;
 
 	void setCameraToWorldCoordinate(const Vec3f& from, const Vec3f& to, Vec3f& tmp = Vec3f(0, 1, 0))
 	{

@@ -2,10 +2,6 @@
 #include "Geometry.h"
 #include "Constant.h"
 
-#include <random>
-default_random_engine generator;
-uniform_real_distribution<double> distribution(0.0, 1.0);
-
 class Light
 {
 public:
@@ -19,15 +15,17 @@ public:
 
 class SphereLight : public Light
 {
+	float radius;
 public:
-	SphereLight(const Vec3f& centerPos, const Vec3f &c = 1, const float &i = 1) : Light(centerPos, c, i) {}
+	SphereLight(const Vec3f& centerPos, const Vec3f &c = 1, const float &i = 1,
+		const float r=1.0f) : Light(centerPos, c, i) ,radius(r){}
 	// P: is the shaded point
 	void illuminate(const Vec3f &P, Vec3f &lightDir, Vec3f &lightIntensity, float &distance)
 	{
 		lightDir = (P - centerPosition);
 		float r2 = lightDir.norm();
-		distance = sqrt(r2);
-		lightDir.x /= distance, lightDir.y /= distance, lightDir.z /= distance;
+		distance = sqrt(r2)-radius;
+		lightDir.normalize();		
 		// avoid division by 0
 		lightIntensity = color * intensity / (4 * M_PI * r2);
 	}
@@ -52,6 +50,9 @@ public:
 
 	Vec3f randomSelectPoint()
 	{
+		default_random_engine generator;
+		uniform_real_distribution<float> distribution(0.0, 1.0);
+
 		float r1 = distribution(generator);
 		float r2 = distribution(generator);
 		float r3 = distribution(generator);
@@ -64,10 +65,10 @@ public:
 	void illuminate(const Vec3f &P, Vec3f &lightDir, Vec3f &lightIntensity, float &distance)
 	{
 		lightDir = (P - randomSelectPoint());
+		lightDir.normalize();
 		float r2 = lightDir.norm();
-		distance = sqrt(r2);
-		lightDir.x /= distance, lightDir.y /= distance, lightDir.z /= distance;
+		distance = sqrt(r2);		
 		// avoid division by 0
-		lightIntensity = color * intensity / (4 * M_PI * r2);
+		lightIntensity = color * intensity;
 	}
 };

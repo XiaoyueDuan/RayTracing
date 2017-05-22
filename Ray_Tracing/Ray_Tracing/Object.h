@@ -18,7 +18,7 @@ public:
 	// Returns true if an intersection was found, false otherwise
 	// See method implementation in children class for details
 	virtual bool intersect(const Vec3f &orig, const Vec3f &dir, float &t,
-		int Index, Vec2f &uv, Object *&o)
+		int &Index, Vec2f &uv, Object *&o)
 	{
 		if (!aabb.intersect(orig, dir))
 			return false;

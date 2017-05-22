@@ -16,7 +16,7 @@ public:
 	}
 
 	virtual bool intersect(const Vec3f &orig, const Vec3f &dir,
-		float &tNear, int index, Vec2f &uv, Object *&o)
+		float &tNear, int &index, Vec2f &uv, Object *&o)
 	{
 		// 1. Use bounding box to judge roughly whether intersect first
 		Object::intersect(orig, dir, tNear, index, uv, o);
@@ -25,16 +25,16 @@ public:
 		bool isect = false;
 		float t = kInfinity;
 		Vec2f UV;
+		int j = 0;
 		for (int i = 0; i < list.size(); ++i)
-		{
-			int j=0;
+		{			
 			if (list.at(i)->intersect(orig, dir, t, j, UV, o) && t < tNear && t>kEpsilon)
 			{
 				tNear = t;
 				// comment next two lines with UV being subsituted by uv!!!!!!!!!!!!!!!!!!!!! 
 				uv.x = UV.x;
 				uv.y = UV.y;
-				index = i;
+				index = j;
 				isect = true;
 			}
 		}

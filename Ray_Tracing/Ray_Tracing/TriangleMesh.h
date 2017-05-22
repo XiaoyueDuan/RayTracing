@@ -16,7 +16,7 @@ public:
 	}
 
 	bool intersect(const Vec3f &orig, const Vec3f &dir, 
-					float &t, int triIndex, Vec2f &uv, Object *&o);
+					float &t, int &triIndex, Vec2f &uv, Object *&o);
 
 	void getSurfaceProperties(const Vec3f &hitPoint, const Vec3f &viewDirection,
 								const int &triIndex, const Vec2f &uv,

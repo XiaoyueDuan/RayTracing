@@ -1,7 +1,7 @@
 #include"TriangleMesh.h"
 
 bool TriangleMesh::intersect(const Vec3f &orig, const Vec3f &dir,
-	float &tNear, int triIndex, Vec2f &uv, Object *&o)
+	float &tNear, int &triIndex, Vec2f &uv, Object *&o)
 {
 	// 1. Use bounding box to judge roughly whether intersect first
 	if (!aabb.intersect(orig, dir))

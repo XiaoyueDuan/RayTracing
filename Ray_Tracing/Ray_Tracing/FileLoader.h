@@ -7,9 +7,9 @@
 
 #include "MaterialDataStructure.h"
 #include "Object.h"
-#include"Group.h"
-#include"TriangleMesh.h"
-#include"Scene.h"
+#include "Group.h"
+#include "TriangleMesh.h"
+#include "Scene.h"
 
 using namespace std;
 
