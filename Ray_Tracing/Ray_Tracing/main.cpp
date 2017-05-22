@@ -38,18 +38,18 @@ int main(int argc, char *argv[])
 	
 	Options option;
 	option.setCameraToWorldCoordinate(Vec3f(0, 5, 30), Vec3f(0, 5, 0), Vec3f(0, 1, 0));
-	//option.width = 120;
-	//option.height = 100;
-	option.maxDepth = 3;
+	option.width = 120;
+	option.height = 100;
+	option.maxDepth = 2;
 	option.fov = 25;
 
 	int n = option.width*option.height;
 	Vec3f *pixels = new Vec3f[n];
 
 	render(option, objLoader.scene, pixels);
-	//int dpi = 72;
-	//string saveFileName = "test4.bmp";
-	//savebmp(saveFileName, option.width, option.height, dpi, pixels);
+	int dpi = 72;
+	string saveFileName = "result/result.bmp";
+	savebmp(saveFileName, option.width, option.height, dpi, pixels);
 
 	return 0;
 }
