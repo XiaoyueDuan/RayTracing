@@ -1,14 +1,16 @@
 #pragma once
 #include <algorithm>
-
-#include <omp.h>
+#include <random>
 
 #include "Geometry.h"
 #include "Constant.h"
 #include "FileLoader.h"
 #include "Options.h"
 #include "ImageSaver.h"
+#include "Light.h"
 
+default_random_engine generator;
+uniform_real_distribution<double> distribution(0.0, 1.0);
 //enum MaterialType { DIFF, SPEC, REFR };
 
 class Path
@@ -102,6 +104,7 @@ public:
 Vec3f castRay(
 	const Vec3f &orig, const Vec3f &dir,
 	Scene &scene,
+	vector<Light> &lights,
 	const Options &options,
 	const int depth,
 	const int N = 16)
@@ -137,6 +140,18 @@ Vec3f castRay(
 		// If it's diffuse
 		if (m->diffuse)
 		{
+			Vec3f directLighting = 0;
+			for (int i = 0; i < lights.size(); ++i)
+			{
+				Vec3f lightDir, lightIntensity;
+				float tNear;
+				lights[i].illuminate(hitPoint, lightDir, lightIntensity, tNear);
+
+				int index;
+				bool vis = !scene.intersect(hitPoint, -lightDir, tnear, index, uv, hitObject);
+				directLighting+=vis * lightIntensity * max(0.f, hitNormal.dotProduct(-lightDir));
+			}
+
 			Vec3f indirectLigthing = 0;
 			Vec3f Nt, Nb;
 			path.createCoordinateSystem(hitNormal, Nt, Nb);
@@ -150,19 +165,19 @@ Vec3f castRay(
 					sample.x * Nb.y + sample.y * hitNormal.y + sample.z * Nt.y,
 					sample.x * Nb.z + sample.y * hitNormal.z + sample.z * Nt.z);
 				// don't forget to divide by PDF and multiply by cos(theta)
-				indirectLigthing += r1 * castRay(hitPoint, sampleWorld, scene, options, depth + 1) / pdf;
+				indirectLigthing += r1 * castRay(hitPoint, sampleWorld, scene, lights, options, depth + 1) / pdf;
 				//indirectLigthing += castRay(hitPoint, sampleWorld, scene, options, depth + 1) / pdf;
 			}
 			// divide by N
 			indirectLigthing /= (float)N;
-			hitColor += 2 * indirectLigthing*m->kd;
+			hitColor +=(directLighting/M_PI + 2 * indirectLigthing)*m->kd;
 		}
 
 		// If it's specular
 		if (m->specular)
 		{
 			Vec3f Reflect = path.reflect(dir, hitNormal).normalize();
-			Vec3f lightIntensity = castRay(hitPoint, Reflect, scene, options, depth + 1);
+			Vec3f lightIntensity = castRay(hitPoint, Reflect, scene, lights, options, depth + 1);
 			float cosineAlpha = Reflect.dotProduct(-dir);
 			//hitColor += lightIntensity * m->ks * pow(cosineAlpha, m->ns.exponent);
 			hitColor += lightIntensity * m->ks;
@@ -178,10 +193,10 @@ Vec3f castRay(
 			Vec3f bias = options.bias * hitNormal;
 			// compute refraction 	
 			Vec3f refractionDirection = path.refract(dir, hitNormal, m->ni.optical_density).normalize();
-			refractionColor = castRay(hitPoint, refractionDirection, scene, options, depth + 1);
+			refractionColor = castRay(hitPoint, refractionDirection, scene, lights, options, depth + 1);
 			// compute reflect 	
 			Vec3f reflectionDirection = path.reflect(dir, hitNormal).normalize();
-			reflectionColor = castRay(hitPoint, reflectionDirection, scene, options, depth + 1);
+			reflectionColor = castRay(hitPoint, reflectionDirection, scene, lights, options, depth + 1);
 
 			// mix the two
 			hitColor += reflectionColor * (1 - kr) + refractionColor * kr;
@@ -201,6 +216,7 @@ void render(
 	const Options &options,
 	Scene &scene,
 	Vec3f *pixels,
+	vector<Light> &lights,
 	int N = 100)
 {
 	float scale = tan(options.fov * 0.5*M_PI / 180);
@@ -227,7 +243,7 @@ void render(
 				options.cameraToWorld.multDirMatrix(Vec3f(x, y, 1), dir);
 				dir.normalize();
 
-				Vec3f newColor = castRay(orig, dir, scene, options, 0);
+				Vec3f newColor = castRay(orig, dir, scene, lights, options, 0);
 				color += newColor;
 				//if (hitLight(newColor))
 				//{

@@ -2,14 +2,19 @@
 #include "Geometry.h"
 #include "Constant.h"
 
+#include <random>
+default_random_engine generator;
+uniform_real_distribution<double> distribution(0.0, 1.0);
+
 class Light
 {
 public:
-	Light(const Vec3f& centerPos, const Vec3f &c = 1, const float &i = 1) :centerPosition(centerPos), color(c), intensity(i) {}
-	virtual void illuminate(const Vec3f &P, Vec3f &, Vec3f &, float &)= 0;
 	Vec3f color;
 	float intensity;
 	Vec3f centerPosition;
+
+	Light(const Vec3f& centerPos, const Vec3f &c = 1, const float &i = 1) :centerPosition(centerPos), color(c), intensity(i) {}
+	virtual void illuminate(const Vec3f &P, Vec3f &lightDir, Vec3f &lightIntensity, float &distance){}	
 };
 
 class SphereLight : public Light

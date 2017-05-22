@@ -125,6 +125,7 @@
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="Group.h" />
     <ClInclude Include="ImageSaver.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="MaterialDataStructure.h" />
     <ClInclude Include="MultiObjects.h" />
     <ClInclude Include="Object.h" />

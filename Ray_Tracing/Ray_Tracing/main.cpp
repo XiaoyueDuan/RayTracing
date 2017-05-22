@@ -8,7 +8,6 @@ int main(int argc, char *argv[])
 	//string mtlname = "../../models/scene_2_obj/scene02_modified.mtl";
 	//mtlLoader.loadMTL(mtlname);
 
-
 	// Load Walls in scene03.obj
 	ObjLoader objLoader;
 	string objpath= "../../models/scene_3_obj/";
@@ -36,17 +35,26 @@ int main(int argc, char *argv[])
 	objLoader.scene.add(*(dynamic_cast<Object *> (&sphere1)));
 	objLoader.scene.add(*(dynamic_cast<Object *> (&sphere2)));
 	
+	// Set opiton
 	Options option;
 	option.setCameraToWorldCoordinate(Vec3f(0, 5, 30), Vec3f(0, 5, 0), Vec3f(0, 1, 0));
-	option.width = 120;
-	option.height = 100;
+	//option.width = 120;
+	//option.height = 100;
 	option.maxDepth = 2;
 	option.fov = 25;
 
 	int n = option.width*option.height;
 	Vec3f *pixels = new Vec3f[n];
 
-	render(option, objLoader.scene, pixels);
+	// Create Light Sources
+	vector<Light> lights;
+	lights.push_back(AreaLight(Vec3f(0, 9.882, 0), Vec3f(1.0f), 1.0f,
+		Vec3f(-1.05, 9.882, -1.05), Vec3f(1.05, 9.882, 1.05)));
+
+	// Rendering
+	render(option, objLoader.scene, pixels,lights);
+
+	// Save images
 	int dpi = 72;
 	string saveFileName = "result/result.bmp";
 	savebmp(saveFileName, option.width, option.height, dpi, pixels);
