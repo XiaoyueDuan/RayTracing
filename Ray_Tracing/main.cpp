@@ -4,10 +4,6 @@
 
 int main(int argc, char *argv[])
 {
-	//MTLLoader mtlLoader;
-	//string mtlname = "../../models/scene_2_obj/scene02_modified.mtl";
-	//mtlLoader.loadMTL(mtlname);
-	// Load Walls in scene03.obj
 #ifdef GI
 	ObjLoader objLoader;
 	string objpath= "../models/scene_3_obj/";
